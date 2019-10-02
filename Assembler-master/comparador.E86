@@ -1,0 +1,28 @@
+org 100h	 ;directiva que define donde colocar codigo
+comienzo: 
+mov si, x	 ;transfiere datos desde un operando x a un operando si
+mov al, msg2[si] ;origen ( msg2[si]) destino (al)
+cmp msg[si], al  ;comparar letra por letra las cadenas
+jne dif:	 ;operador de diferencia
+cmp msg[si], "$" ;si es el final y el programa llega aca, quiere decir que son iguales
+jz igu:		 ;operador de igualdad
+inc x		 ;Incrementa x
+loop comienzo	 ;salta a la direccion especificada (derementa en 1 CX)
+
+igu:
+mov dx, offset msg3 
+mov ah, 9
+int 21h
+ret		 ;volver de un procedimiento
+
+dif:
+mov dx, offset msg4
+mov ah, 9
+int 21h
+ret
+
+msg  db "programacon $" 
+msg2 db "programacion $" 
+msg3 db "Son iguales $"
+msg4 db "Son diferentes $"
+x dw 0
